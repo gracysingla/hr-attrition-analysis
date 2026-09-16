@@ -109,7 +109,13 @@ hr-attrition-analysis/
 └── output/
     └── dashboard.png
 ```
+### Power BI version
 
+An interactive version of the same analysis, built in Power BI Desktop with slicers for department, overtime and business travel.
+
+![Power BI dashboard](output/powerbi-dashboard.png)
+
+The .pbix file is in the repository root.
 ---
 
 ## A note on the data
