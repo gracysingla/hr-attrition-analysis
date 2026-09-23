@@ -14,37 +14,39 @@ the leavers have anything in common?
 1,470 employee records covering department, job role, length of service, monthly
 income, overtime, business travel, job satisfaction and whether the employee left.
 
-Column names follow the widely used IBM HR Analytics Employee Attrition dataset, so
-the same queries run unchanged against that CSV if you swap it in.
+This is the widely used IBM HR Analytics Employee Attrition dataset.
 
 ---
 
 ## What I found
 
-**Overall attrition is 18.1%** — 266 of 1,470 employees left.
+[#what-i-found](#what-i-found)
 
-**1. Attrition is concentrated in the first year.**
-Employees with 0–1 years of service leave at **26.6%**, against 11.8% for those with
-2–4 years and 7.6% for those past ten years. The first year is more than three times
-riskier than the long-tenured group. That points at recruitment fit and onboarding
-rather than pay alone.
+**Overall attrition is 16.1%** — 237 of 1,470 employees left.
 
-**2. Sales is the worst department, but the problem is narrower than that.**
-Sales sits at 21.6% against 16.2% for R&D. Breaking it down by role shows it isn't the
-whole department — **Sales Representative alone runs at 38.5%**, while Sales Manager is
-at 9.3%. Treating this as a "Sales problem" would miss the point.
+**1. Attrition is concentrated in the first year.** Employees with 0–1 years of service leave at **34.9%**, against 18.1% for those with
+2–4 years, 11.1% for 5–9 years, and 10.4% past ten years. The first year is
+roughly **3.4x** riskier than the long-tenured group. That points at
+recruitment fit and onboarding rather than pay alone.
 
-**3. Pay tracks attrition strongly at the bottom of the scale.**
-The under-3k income band leaves at **42.9%**, falling to 23.0% at 3k–6k, 16.6% at
-6k–10k and 11.3% above 10k. The effect is steepest at the lowest band, which overlaps
-heavily with the Sales Representative role.
+**2. Sales and HR run close together; R&D is the outlier.** Sales sits at 20.6%, HR close behind at 19.0%, R&D notably lower at
+13.8%. Breaking it down by role shows the real driver — **Sales
+Representative alone runs at 39.8%**, against a Sales department average of
+20.9%. Laboratory Technician in R&D is a similar story: 23.9% against a
+10.3% department average. Treating this as a department-level problem
+misses where the risk actually sits.
 
-**4. Overtime and frequent travel compound each other.**
-Employees who work overtime *and* travel frequently leave at **32.9%**, roughly double
-the rate of those who do neither. Either factor alone is much milder.
+**3. Pay tracks attrition strongly at the bottom of the scale.** The under-3k income band leaves at **28.6%**, falling to 12.7% at 3k–6k,
+12.0% at 6k–10k, and 8.9% above 10k. The effect is steepest at the lowest
+band, which overlaps heavily with the Sales Representative role.
 
-**Where I'd look first:** early-tenure Sales Representatives on the lowest income band
-who also work overtime. That group sits at the intersection of every factor above.
+**4. Overtime and frequent travel compound each other sharply.** Employees who work overtime *and* travel frequently leave at **41.9%**,
+against just 4.3% for those doing neither — a gap of nearly **10x**. Either
+factor alone is much milder.
+
+**Where I'd look first:** early-tenure Sales Representatives on the lowest
+income band who also work overtime and travel frequently. That group sits
+at the intersection of every factor above.
 
 ---
 
@@ -77,38 +79,28 @@ Queries live in `/queries` and are numbered in the order they build on each othe
 ---
 
 ## Running it
-
-```bash
-python generate_data.py     # creates data/employees.csv
-python run_analysis.py      # loads into SQLite, runs every query, prints results
-python build_dashboard.py   # writes output/dashboard.png
-```
-
-Only `pandas`-free standard library plus `matplotlib` for the dashboard. SQLite is used
-so there's nothing to install — the SQL is standard and runs in MySQL Workbench too.
+python run_analysis.py # loads into SQLite, runs every query, prints results
+python build_dashboard.py # writes output/dashboard.png
 
 ---
 
 ## Files
-
-```
 hr-attrition-analysis/
 ├── README.md
-├── generate_data.py        # builds the dataset
-├── run_analysis.py         # loads data, runs all queries
-├── build_dashboard.py      # builds the dashboard image
+├── run_analysis.py # loads data, runs all queries
+├── build_dashboard.py # builds the dashboard image
 ├── data/
-│   └── employees.csv
+│ └── employees.csv
 ├── queries/
-│   ├── 01_overall_attrition.sql
-│   ├── 02_attrition_by_department.sql
-│   ├── 03_tenure_bands.sql
-│   ├── 04_role_ranking.sql
-│   ├── 05_income_bands.sql
-│   └── 06_overtime_and_travel.sql
+│ ├── 01_overall_attrition.sql
+│ ├── 02_attrition_by_department.sql
+│ ├── 03_tenure_bands.sql
+│ ├── 04_role_ranking.sql
+│ ├── 05_income_bands.sql
+│ └── 06_overtime_and_travel.sql
 └── output/
-    └── dashboard.png
-```
+└── dashboard.png
+
 ### Power BI version
 
 An interactive version of the same analysis, built in Power BI Desktop with slicers for department, overtime and business travel.
@@ -116,14 +108,11 @@ An interactive version of the same analysis, built in Power BI Desktop with slic
 ![Power BI dashboard](output/powerbi-dashboard.png)
 
 The .pbix file is in the repository root.
+
 ---
 
-## A note on the data
+## Data source
 
-The dataset here is generated by `generate_data.py` rather than taken from a real
-company — real HR records aren't public. The generator builds in realistic relationships
-(early tenure, low pay, overtime and frequent travel all raise attrition risk), which is
-what the analysis then recovers.
+[#data-source](#data-source)
 
-To run this against the public IBM HR Analytics dataset instead, download that CSV, save
-it as `data/employees.csv`, and every query works unchanged.
+Dataset: IBM HR Analytics Employee Attrition (Kaggle), 1,470 records, 35 features.
