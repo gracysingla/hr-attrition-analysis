@@ -87,12 +87,12 @@ def main():
     barh(ax, [r[0] for r in rows], [r[3] for r in rows],
          "Attrition rate by length of service")
     
-    # ---- income ----
+   # ---- income ----
     _, rows = q(conn, open("queries/05_income_bands.sql").read())
     ax = fig.add_subplot(gs[2, 0])
-    barh(ax, [r[0] for r in rows], [r[2] for r in rows],
+    barh(ax, [r[0] for r in rows], [r[3] for r in rows],
          "Attrition rate by monthly income band")
-
+    
     # ---- worst roles ----
     _, rows = q(conn, """
         SELECT JobRole,
