@@ -86,7 +86,7 @@ def main():
     ax = fig.add_subplot(gs[1, 1])
     barh(ax, [r[0] for r in rows], [r[3] for r in rows],
          "Attrition rate by length of service")
-
+    
     # ---- income ----
     _, rows = q(conn, open("queries/05_income_bands.sql").read())
     ax = fig.add_subplot(gs[2, 0])
