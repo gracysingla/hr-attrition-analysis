@@ -1,4 +1,5 @@
 -- Does pay explain who leaves?
+-- Group employees into monthly income bands and evaluate attrition.
 
 SELECT
     CASE
@@ -8,6 +9,7 @@ SELECT
         ELSE '10k+'
     END                                                           AS income_band,
     COUNT(*)                                                      AS headcount,
+    SUM(CASE WHEN Attrition = 'Yes' THEN 1 ELSE 0 END)            AS left_company,
     ROUND(100.0 * SUM(CASE WHEN Attrition = 'Yes' THEN 1 ELSE 0 END) / COUNT(*), 1)
                                                                   AS attrition_rate_pct
 FROM employees
